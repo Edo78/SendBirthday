@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+    Questo template riceve i dati restituiti dalla funzionalità getBirthdays
+    quindi un oggetto
+        {
+            'taday': CalendarEvent[],
+            'remaining': CalendarEvent[]
+        }
+-->
+<html>
+    <head>
+        <base target="_top">
+        <!-- Utilizzo la funzione 'include' per incorporare i CSS dal file 'Stylesheet.html' -->
+        <?!= include('Stylesheet'); ?>
+    </head>
+    <body>
+        <div class="main">
+            <h1>I Prossimi Compleanni</h1>
+            <div id="today">
+                <? if(birthdays.today.length === 0) { ?>
+                    Non ci sono compleanni oggi
+                <? } else {
+                    var bPrefix = (birthdays.today.length === 1) ? 'c\'è' : 'ci sono';
+                    var bSuffix = (birthdays.today.length === 1) ? 'evento' : 'eventi'; ?>
+                    Oggi <?= bPrefix ?> <?= birthdays.today.length ?> <?= bSuffix ?>
+                    <? birthdays.today.forEach(function(bday) { ?>
+                        <div><?= bday.getDescription() ?></div>
+                    <? }); ?>
+                <? } ?>
+            </div>
+            <div id="remaining">
+                <? birthdays.remaining.forEach(function(bday) { ?>
+                    <div><?= niceDate(bday.getStartTime()) ?> | <?= bday.getDescription() ?></div>
+                <? }); ?>
+            </div>
+        </div>
+    </body>
+</html>
+
+
